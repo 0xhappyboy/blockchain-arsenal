@@ -608,6 +608,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "aptos-sdk",
+ "lazy_static",
  "once_cell",
  "rand 0.7.3",
  "tokio",
