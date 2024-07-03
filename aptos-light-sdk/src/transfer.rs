@@ -1,7 +1,11 @@
 //! Provides methods for transactions
 
 use anyhow::{Context, Ok};
-use aptos_sdk::{coin_client::CoinClient, rest_client::PendingTransaction, types::LocalAccount};
+use aptos_sdk::{
+    coin_client::CoinClient,
+    rest_client::{Client, PendingTransaction},
+    types::LocalAccount,
+};
 
 use crate::{client::AptosClient, utils::wrap_coin_amount};
 
@@ -19,7 +23,8 @@ pub async fn create_txn_hash(
     to: &mut LocalAccount,
     amount: u64,
 ) -> Result<PendingTransaction, String> {
-    let mut coin_client = CoinClient::new(&aptos_client.rest_client().clone().unwrap());
+    let rest_client: Client = aptos_client.rest_client().clone().unwrap();
+    let coin_client = CoinClient::new(&rest_client);
     let txn_hash: Result<aptos_sdk::rest_client::PendingTransaction, anyhow::Error> = coin_client
         .transfer(from, to.address(), wrap_coin_amount(amount), None)
         .await;

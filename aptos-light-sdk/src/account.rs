@@ -12,7 +12,6 @@ use crate::client::AptosClient;
 /// create_new_account(aptos_client)
 /// ```
 pub fn create_new_account(aptos_client: &mut AptosClient) -> Result<LocalAccount, String> {
-    let coin_client = CoinClient::new(&aptos_client.rest_client().clone().unwrap());
     let mut account = LocalAccount::generate(&mut rand::rngs::OsRng);
     Ok(account)
 }
